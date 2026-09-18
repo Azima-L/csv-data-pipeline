@@ -11,7 +11,7 @@ def run_transform(df, output_path):
     print("\n[INFO] Transformations applied:\n"
         " - Name casing normalized\n"
         " - Salary values clipped to [50000, 200000]\n"
-        " - Dates parsed to datetime format"
+        " - Dates parsed to datetime format\n"
         )
     print(f"[INFO] Cleaned data written to {output_path.name}\n")
     return df
