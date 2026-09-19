@@ -21,6 +21,24 @@ This project highlights my learning roadmap to engineer a data workflow from as 
 
 ---
 
+## System Architecture
+```text
+csv-data-pipeline/
+├── data/
+│   └── employees.csv       # my raw dataset
+├── src/
+│   ├── profile.py          # data exploration and profiling
+│   ├── validate.py         # data quality validation
+│   ├── transform.py        # data cleaning and normalization
+│   └── main.py             # pipeline orchestration, CLI entry point
+├── .gitignore
+├── LICENSE                 # MIT licence details
+├── README.md               # README file for the project's description
+└── requirements.txt        # Python dependencies (Pandas)
+```
+
+---
+
 ## Usage
 
 Run the full pipeline:
@@ -36,8 +54,8 @@ python main.py --input my_data.csv --output my_data_clean.csv
 Run individual stages:
 ```bash
 python profile.py
-python validator.py
-python main.py
+python validate.py
+python transform.py
 ```
 ---
 
