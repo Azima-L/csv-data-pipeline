@@ -42,7 +42,7 @@ def main(df, output_path):
     print("[INFO] Pipeline Complete\n")
 
 if __name__ == "__main__":
-    input_path = Path(__file__).parent / args.input
-    output_path = Path(__file__).parent / args.output
+    input_path = Path(__file__).parent.parent / "data" / args.input
+    output_path = Path(__file__).parent.parent / "data" / args.output
     df = pd.read_csv(input_path)
     main(df, output_path)

@@ -17,7 +17,7 @@ def run_transform(df, output_path):
     return df
 
 if __name__ == "__main__":
-    csv_path = Path(__file__).parent / "employees.csv"
+    csv_path = Path(__file__).parent.parent / "data" / "employees.csv"
     df = pd.read_csv(csv_path)
-    output_path = Path(__file__).parent / "employees_clean.csv"
+    output_path = Path(__file__).parent.parent / "data" / "employees_clean.csv"
     run_transform(df, output_path)

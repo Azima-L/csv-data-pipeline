@@ -61,6 +61,6 @@ def run_validation(df):
     return total_issues
 
 if __name__ == "__main__":
-    csv_path = Path(__file__).parent / "employees.csv"
+    csv_path = Path(__file__).parent.parent / "data" / "employees.csv"
     df = pd.read_csv(csv_path)
     run_validation(df)
