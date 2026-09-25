@@ -10,7 +10,7 @@ parser.add_argument("--output", default="employees_clean.csv", help="Output CSV 
 args = parser.parse_args()
 
 def page_divider(option):
-    divider_length = 60
+    divider_length = 65
     if option == 1:
         print("\n" + "-" * divider_length)
     elif option == 2:
@@ -23,7 +23,7 @@ def main(df, output_path):
     print("\n[1/2] Validating data...")
     page_divider(1)
 
-    issues_count = run_validation(df)
+    issues_count, issue_details = run_validation(df)
 
     page_divider(2)
 
@@ -40,6 +40,9 @@ def main(df, output_path):
 
     page_divider(2)
     print("[INFO] Pipeline Complete\n")
+
+    from report import generate_report
+    generate_report(args.input, args.output, issues_count, issue_details, len(df))
 
 if __name__ == "__main__":
     input_path = Path(__file__).parent.parent / "data" / args.input
