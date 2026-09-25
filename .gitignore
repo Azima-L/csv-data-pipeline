@@ -1,5 +1,6 @@
 # Generated output files
 data/employees_clean.csv
+reports/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
