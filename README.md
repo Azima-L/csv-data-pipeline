@@ -10,6 +10,7 @@ This project highlights my learning roadmap to engineer a data workflow from as 
 - `profile.py`   — explores and summarises the dataset
 - `validate.py`  — identifies data quality issues
 - `transform.py` — cleans and normalises the data
+- `report.py` — generates structured audit report
 - `main.py` — orchestrates the full pipeline end to end
 
 ---
@@ -30,6 +31,7 @@ csv-data-pipeline/
 │   ├── profile.py          # data exploration and profiling
 │   ├── validate.py         # data quality validation
 │   ├── transform.py        # data cleaning and normalization
+│   ├── report.py           # audit report generation
 │   └── main.py             # pipeline orchestration, CLI entry point
 ├── .gitignore
 ├── LICENSE                 # MIT licence details
