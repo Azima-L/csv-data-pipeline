@@ -17,13 +17,16 @@ def name_casing(df):
         print(" All names are title cased.")
     return issues, details
 
-def salary_range(df):
+def salary_range(df, config):
     issues = 0
     details = []
     all_correct = True
 
+    salary_min = config["salary_min"]
+    salary_max = config["salary_max"]
+
     for index, row in df.iterrows():
-        if row['salary'] < 50000 or row['salary'] > 200000:
+        if row['salary'] < salary_min or row['salary'] > salary_max:
             print(f" {row['employee_id']} - {row['name']} (suspicious salary)")
             details.append(f" {row['employee_id']} | {row['name']} | suspicious salary")
             issues += 1
@@ -47,7 +50,7 @@ def date_format(df):
         print(" All dates correctly formatted.")
     return issues, details
 
-def run_validation(df):
+def run_validation(df, config):
     total_issues = 0
     all_details = []
 
@@ -61,7 +64,7 @@ def run_validation(df):
     all_details.extend(details)
 
     print("\n[CHECK 2] Salary Range")
-    count, details = salary_range(df)
+    count, details = salary_range(df, config)
     total_issues += count
     all_details.extend(details)
 
@@ -74,6 +77,12 @@ def run_validation(df):
     return total_issues, all_details
 
 if __name__ == "__main__":
+    import json
+    
     csv_path = Path(__file__).parent.parent / "data" / "employees.csv"
+    config_path = Path(__file__).parent.parent / "config" / "rules.json"
+    with open(config_path) as f:
+        config = json.load(f)
+
     df = pd.read_csv(csv_path)
-    run_validation(df)
+    run_validation(df, config)
