@@ -1,0 +1,6 @@
+{
+    "salary_min": 50000,
+    "salary_max": 200000,
+    "name_format": "title_case",
+    "date_format": "YYYY-MM-DD"
+}
