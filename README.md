@@ -4,6 +4,8 @@ A lightweight ETL pipeline demonstrating data profiling, validation, and transfo
 
 This project highlights my learning roadmap to engineer a data workflow from as basic as the foundation level.
 
+<br>
+
 ---
 
 ## Pipeline Stages
@@ -13,18 +15,24 @@ This project highlights my learning roadmap to engineer a data workflow from as 
 - `report.py` — generates structured audit report
 - `main.py` — orchestrates the full pipeline end to end
 
+<br>
+
 ---
 
 ## Tech Stack
 - Python 3.10+
 - pandas
-- pathlib, argparse, re
+- json, pathlib, argparse , datetime, re
+
+<br>
 
 ---
 
 ## System Architecture
 ```text
 csv-data-pipeline/
+├── config/
+│   └── rules.json          # JSON config for validation rules
 ├── data/
 │   └── employees.csv       # my raw dataset
 ├── src/
@@ -38,6 +46,8 @@ csv-data-pipeline/
 ├── README.md               # README file for the project's description
 └── requirements.txt        # Python dependencies (Pandas)
 ```
+
+<br>
 
 ---
 
@@ -59,6 +69,29 @@ python profile.py
 python validate.py
 python transform.py
 ```
+
+<br>
+
+---
+
+## Configuration
+Validation rules are defined in `config/rules.json`:
+```json
+{
+    "salary_min": 50000,
+    "salary_max": 200000,
+    "name_format": "title_case",
+    "date_format": "YYYY-MM-DD"
+}
+```
+
+Run with a custom config:
+```bash
+python3 main.py --config rules.json
+```
+
+<br>
+
 ---
 
 ## License
