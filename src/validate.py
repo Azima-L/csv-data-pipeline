@@ -47,21 +47,27 @@ def salary_range(df, config):
             details.append(f" {row['employee_id']} | {row['name']} | suspicious salary")
             issues += 1
             all_correct = False
+
     if all_correct:
         print(" All salaries within expected range.")
     return issues, details
 
-def date_format(df):
+def date_format(df, config):
     issues = 0
     details = []
     all_correct = True
 
+    expected_format = config.get("date_format", "YYYY-MM-DD")
+
     for index, row in df.iterrows():
-        if not re.match(r"\d{4}-\d{2}-\d{2}", row['start_date']):
+        date_pattern = r"\d{4}-\d{2}-\d{2}" if expected_format == "YYYY-MM-DD" else None
+
+        if date_pattern and not re.match(date_pattern, row['start_date']):
             print(f" {row['employee_id']} - {row['name']} (date in wrong format)")
             details.append(f" {row['employee_id']} | {row['name']} | date in wrong format")
             issues += 1
             all_correct = False
+
     if all_correct:
         print(" All dates correctly formatted.")
     return issues, details
@@ -85,7 +91,7 @@ def run_validation(df, config):
     all_details.extend(details)
 
     print("\n[CHECK 3] Date Format")
-    count, details = date_format(df)
+    count, details = date_format(df, config)
     total_issues += count
     all_details.extend(details)
 
