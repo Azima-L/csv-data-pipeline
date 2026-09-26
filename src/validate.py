@@ -2,19 +2,35 @@ import pandas as pd
 from pathlib import Path
 import re
 
-def name_casing(df):
+def name_casing(df, config):
     issues = 0
     details = []
     all_correct = True
 
+    name_format = config.get("name_format", "title_case")
+
     for index, row in df.iterrows():
-        if row['name'] != row['name'].title():
-            print(f" {row['employee_id']} - {row['name']} (not Title Case)")
-            details.append(f" {row['employee_id']} | {row['name']} | not Title Case")
+        if name_format == "title_case":
+            expected = row["name"].title()
+            format_warn = "not Title Case"
+        elif name_format == "upper_case":
+            expected = row["name"].upper()
+            format_warn = "not Upper Case"
+        elif name_format == "lower_case":
+            expected = row["name"].lower()
+            format_warn = "not Lower Case"
+        else:
+            print(f"[WARN] Unknown name_format '{name_format}' — skipping check")
+            return 0, []
+
+        if row['name'] != expected:
+            print(f" {row['employee_id']} - {row['name']} ({format_warn})")
+            details.append(f" {row['employee_id']} | {row['name']} | {format_warn}")
             issues += 1
             all_correct = False
+
     if all_correct:
-        print(" All names are title cased.")
+        print(f" All names are {name_format}.")
     return issues, details
 
 def salary_range(df, config):
@@ -59,7 +75,7 @@ def run_validation(df, config):
     print("=" * 40)
 
     print("\n[CHECK 1] Name Casing")
-    count, details = name_casing(df)
+    count, details = name_casing(df, config)
     total_issues += count
     all_details.extend(details)
 
