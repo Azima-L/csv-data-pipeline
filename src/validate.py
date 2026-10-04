@@ -1,6 +1,6 @@
 import pandas as pd
 from pathlib import Path
-import re
+from core import is_valid_name, is_valid_salary, is_valid_date
 
 def name_casing(df, config):
     issues = 0
@@ -11,19 +11,16 @@ def name_casing(df, config):
 
     for index, row in df.iterrows():
         if name_format == "title_case":
-            expected = row["name"].title()
             format_warn = "not Title Case"
         elif name_format == "upper_case":
-            expected = row["name"].upper()
             format_warn = "not Upper Case"
         elif name_format == "lower_case":
-            expected = row["name"].lower()
             format_warn = "not Lower Case"
         else:
             print(f"[WARN] Unknown name_format '{name_format}' — skipping check")
             return 0, []
 
-        if row['name'] != expected:
+        if not is_valid_name(row['name'], name_format):
             print(f" {row['employee_id']} - {row['name']} ({format_warn})")
             details.append(f" {row['employee_id']} | {row['name']} | {format_warn}")
             issues += 1
@@ -42,7 +39,7 @@ def salary_range(df, config):
     salary_max = config["salary_max"]
 
     for index, row in df.iterrows():
-        if row['salary'] < salary_min or row['salary'] > salary_max:
+        if not is_valid_salary(row['salary'], salary_min, salary_max):
             print(f" {row['employee_id']} - {row['name']} (suspicious salary)")
             details.append(f" {row['employee_id']} | {row['name']} | suspicious salary")
             issues += 1
@@ -60,9 +57,7 @@ def date_format(df, config):
     expected_format = config.get("date_format", "YYYY-MM-DD")
 
     for index, row in df.iterrows():
-        date_pattern = r"\d{4}-\d{2}-\d{2}" if expected_format == "YYYY-MM-DD" else None
-
-        if date_pattern and not re.match(date_pattern, row['start_date']):
+        if not is_valid_date(row['start_date'], expected_format):
             print(f" {row['employee_id']} - {row['name']} (date in wrong format)")
             details.append(f" {row['employee_id']} | {row['name']} | date in wrong format")
             issues += 1
